@@ -18,6 +18,9 @@ jobs:
           java-version: '21'
           distribution: 'temurin'
 
+      - name: Install maven
+        run: apt install maven -y
+
       - name: Run the main class
         run: mvn exec:java -Dexec.mainClass="com.example.CounterWithLock"
 

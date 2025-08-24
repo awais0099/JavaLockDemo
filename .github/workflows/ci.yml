@@ -26,9 +26,10 @@ jobs:
 
       - name: Verify output
         run: |
-          # Run again and capture output to verify count
-          OUTPUT=$(mvn exec:java -Dexec.mainClass="com.example.CounterWithLock" | grep "Final count")
+          OUTPUT=$(mvn exec:java -Dexec.mainClass=com.example.CounterWithLock --no-transfer-progress | grep "Final count")
           if [[ "$OUTPUT" != *"2000"* ]]; then
             echo "Error: Final count is not 2000!"
             exit 1
+          else
+            echo "Success: Final count is 2000"
           fi

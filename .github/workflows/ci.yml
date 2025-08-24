@@ -18,6 +18,9 @@ jobs:
           java-version: '21'
           distribution: 'temurin'
 
+      - name: Build with Maven
+        run: mvn clean compile
+        
       - name: Run the main class
         run: mvn exec:java -Dexec.mainClass="com.example.CounterWithLock"
 

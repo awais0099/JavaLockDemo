@@ -1,0 +1,31 @@
+name: Java Lock Demo CI
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up JDK 21
+        uses: actions/setup-java@v3
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+
+      - name: Run the main class
+        run: mvn exec:java -Dexec.mainClass="com.example.CounterWithLock"
+
+      - name: Verify output
+        run: |
+          # Run again and capture output to verify count
+          OUTPUT=$(mvn exec:java -Dexec.mainClass="com.example.CounterWithLock" | grep "Final count")
+          if [[ "$OUTPUT" != *"2000"* ]]; then
+            echo "Error: Final count is not 2000!"
+            exit 1
+          fi
